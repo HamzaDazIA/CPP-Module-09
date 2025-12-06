@@ -44,3 +44,25 @@ int main()
 
     return 0;
 }
+
+
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <string>
+
+int main() {
+    int y = 2055;
+    int m = 1;
+    int d = 27;
+
+    std::ostringstream oss;
+
+    oss << y << "-"
+        << std::setw(2) << std::setfill('0') << m << "-"
+        << std::setw(2) << std::setfill('0') << d;
+
+    std::string date_string = oss.str();
+
+    std::cout << "Stored string: " << date_string << std::endl;
+}
