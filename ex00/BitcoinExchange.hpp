@@ -9,6 +9,8 @@
 #include <cstring>
 #include <string>
 #include <algorithm>
+#include <iomanip>
+
 #define CSV_FILE "data.csv"
 #define CONVER 10
 #define UNCONVER 20
