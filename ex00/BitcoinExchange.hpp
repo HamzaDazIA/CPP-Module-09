@@ -29,6 +29,7 @@ class BitcoinExchange
         BitcoinExchange();
         BitcoinExchange(const BitcoinExchange& obj);
         BitcoinExchange & operator=(const BitcoinExchange& obj);
+        ~BitcoinExchange();
         void read_stord_cvs(void);
         void   parsing_date(std::string str);
         void convert_time(int year, int month, int day,  double key_value);

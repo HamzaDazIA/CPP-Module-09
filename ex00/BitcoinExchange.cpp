@@ -3,19 +3,24 @@
 
 
 BitcoinExchange::BitcoinExchange()
-{
-    
-}
+{}
 
 BitcoinExchange::BitcoinExchange(const  BitcoinExchange& obj)
 {
-
+    *this = obj;
 }
 
 BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange &obj)
 {
+    if (this != &obj)
+    {
+        this->cont_map = obj.cont_map;
+    }
     return (*this);
 }
+
+BitcoinExchange::~BitcoinExchange()
+{}
 
 void BitcoinExchange::read_stord_cvs(void)
 {
@@ -294,7 +299,7 @@ void BitcoinExchange::read_file_input(std::string file_name)
             continue ;
         }
 
-        if (static_cast <long long >(value ) > INT_MAX )
+        if (static_cast <long long >(value ) > 1000  )
         {
             std::cerr << "Error: too large a number." << std::endl;
             continue ;
