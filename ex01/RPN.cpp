@@ -24,20 +24,20 @@ void RPN::calculate(const std::string &str)
 {
     if (str.empty())
     {
-        std::cerr << "Error: Empty expression." << std::endl;
+        std::cerr << "Error" << std::endl;
         return;
     }
-    int first ;
-    int second;
-    int rs;
+    long long first ;
+    long long second;
+    long long rs;
     for(int i = 0; str[i]; i++)
     {
-        if (!std::isdigit(str[i]) && !std::isprint(str[i]) && ((str[i] != '+') && str[i] != '-' && str[i] != '*' && str[i] != '/'))
-        {
-            std::cerr << "Error1 : invalide character.";
-            return;
-        }
 
+        if (!std::isdigit(str[i]) && !std::isspace(str[i]) &&  ((str[i] != '+') && str[i] != '-' && str[i] != '*' && str[i] != '/'))
+        {
+            std::cerr << "Error";
+            return ;
+        }
         if (str[i] == ' ')
             continue;
         if(std::isdigit(str[i]))
@@ -49,14 +49,14 @@ void RPN::calculate(const std::string &str)
         {
             if(this->cont_stack.size() < 2)
             {
-                std::cerr << "Error : invalide calculation .";
+                std::cerr << "Error";
                 return;
             }
             else
             {
-                first = this->cont_stack.top();
+                first = static_cast<long long>(this->cont_stack.top());
                 this->cont_stack.pop();
-                second = this->cont_stack.top();
+                second = static_cast<long long>(this->cont_stack.top());
                 this->cont_stack.pop();
                 if(str[i] == '+')
                 {
@@ -73,7 +73,7 @@ void RPN::calculate(const std::string &str)
                 {
                     if (first == 0)
                     {
-                        std::cerr << "Error : we can not use number 0 in operation /";
+                        std::cerr << "Error";
                         return ;
                     }
                     rs = second / first;
@@ -88,7 +88,7 @@ void RPN::calculate(const std::string &str)
                 }
                 else 
                 {
-                    std::cerr << "Error2 : invalide character.";
+                    std::cerr << "Error";
                     return;
                 }
             }
@@ -96,7 +96,7 @@ void RPN::calculate(const std::string &str)
     }
     if (this->cont_stack.size() != 1)
     {
-        std::cerr << "Error : invalide paramter";
+        std::cerr << "Error";
         return ;
     }
     std::cout << this->cont_stack.top() ;
