@@ -45,6 +45,7 @@ void RPN::calculate(const std::string &str)
             this->cont_stack.push(str[i] - '0');
             continue;
         }
+        
         if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
         {
             if(this->cont_stack.size() < 2)

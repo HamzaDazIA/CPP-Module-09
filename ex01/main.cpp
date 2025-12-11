@@ -12,3 +12,4 @@ int main(int ac, char **av)
     rpn.calculate(av[1]);
     return 0;
 }
+

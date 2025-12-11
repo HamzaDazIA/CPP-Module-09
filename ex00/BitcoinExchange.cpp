@@ -11,6 +11,7 @@ BitcoinExchange::BitcoinExchange(const  BitcoinExchange& obj)
 }
 
 
+
 BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange &obj)
 {
     if (this != &obj)
