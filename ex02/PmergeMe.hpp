@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+typedef std::vector<int> i_vector;
+typedef std::vector<i_vector> vv_vector;
 
 class PmergeMe
 {
