@@ -25,7 +25,7 @@ int main(int ac , char **av)
     }
 
     pmergeme.print_container_and_sort(true);
-    pmergeme.print_container_and_sort(false);
+
     return 0;
 
 }
