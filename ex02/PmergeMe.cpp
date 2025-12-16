@@ -32,6 +32,8 @@ void PmergeMe::parsing_paraneter(std::string str)
 void PmergeMe::print_container_and_sort(bool display)
 {
     timeval start, end;
+    std::vector<std::vector<int>> group_vector;
+    std::deque<std::deque<int>> group_deque;
     std::vector<int>::iterator it = cont_vector.begin();
     for (; it != cont_vector.end(); it++)
     {
@@ -41,23 +43,26 @@ void PmergeMe::print_container_and_sort(bool display)
     if (display)
     {
         gettimeofday(&start, NULL);
-        running_sorting_algorithm(cont_vector);
+        running_sorting_algorithm(cont_vector , group_vector);
         gettimeofday(&end, NULL);
         time_t seconds = end.tv_sec - start.tv_sec;
         time_t microseconds = end.tv_usec - start.tv_usec;
         time_t elapsed = seconds * 1000000 + microseconds;
         std::cout << "Time to process a range of " << cont_vector.size() << 
             " elements with std::vector : " << elapsed << " microseconds" << std::endl;
-        
+
         gettimeofday(&start, NULL);
-        running_sorting_algorithm(cont_deque);
+        running_sorting_algorithm(cont_deque , group_deque);
         gettimeofday(&end, NULL);
+
         seconds = end.tv_sec - start.tv_sec;
         microseconds = end.tv_usec - start.tv_usec;
         elapsed = seconds * 1000000 + microseconds;
+
         std::cout << "Time to process a range of " << cont_deque.size()
             << " elements with std::deque : " << elapsed << " microseconds" << std::endl;
-            std::vector<int>::iterator it = cont_vector.begin();
+
+        std::vector<int>::iterator it = cont_vector.begin();
         for (; it != cont_vector.end(); it++)
         {
             std::cout << *it << " ";
