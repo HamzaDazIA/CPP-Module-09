@@ -4,7 +4,7 @@
 PmergeMe::PmergeMe(){}
 PmergeMe& PmergeMe::operator=(const PmergeMe & obj)
 {
-
+    (void)obj;
     return (*this);
 }
 
@@ -20,7 +20,7 @@ void PmergeMe::parsing_paraneter(std::string str)
 {
     char *end;
     long long num = std::strtoll(str.c_str(), &end, 10);
-    if (*end != '\0' || num <= 0 || num > INT_MAX)
+    if (*end != '\0' || num < 0 || num > INT_MAX)
     {
         throw std::invalid_argument("Invalid input: " + str);
     }
@@ -32,8 +32,8 @@ void PmergeMe::parsing_paraneter(std::string str)
 void PmergeMe::print_container_and_sort(bool display)
 {
     timeval start, end;
-    std::vector<std::vector<int>> group_vector;
-    std::deque<std::deque<int>> group_deque;
+    std::vector<std::vector<int> > group_vector;
+    std::deque<std::deque<int> > group_deque;
     std::vector<int>::iterator it = cont_vector.begin();
     for (; it != cont_vector.end(); it++)
     {
@@ -62,12 +62,23 @@ void PmergeMe::print_container_and_sort(bool display)
         std::cout << "Time to process a range of " << cont_deque.size()
             << " elements with std::deque : " << elapsed << " microseconds" << std::endl;
 
+        std::cout << "Vector result: ";
         std::vector<int>::iterator it = cont_vector.begin();
         for (; it != cont_vector.end(); it++)
         {
             std::cout << *it << " ";
         }
+        std::cout << std::endl;
+
+        std::cout << "Deque result: ";
+        std::deque<int>::iterator dit = cont_deque.begin();
+        for (; dit != cont_deque.end(); dit++)
+        {
+            std::cout << *dit << " ";
+        }
+        std::cout << std::endl;
     }
+
     
 }
 
@@ -84,7 +95,7 @@ std::vector<size_t> generateJacobsthal(size_t pend_size)
     size_t pv = 0;
     size_t temp = 1;
 
-    for (;;true)
+    for (;;)
     {
         size_t rs = pv + 2 * temp;
         if (rs >= pend_size)
@@ -118,11 +129,11 @@ std::vector<size_t> PmergeMe::get_order_jacobsthal(size_t pend_size)
             break;
 
     }
-
     for (size_t j = pend_size ; j > temp; j--)
     {
         order.push_back(j - 1);
     }
     return (order);
 }
+
 

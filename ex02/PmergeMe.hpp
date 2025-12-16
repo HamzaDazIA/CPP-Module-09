@@ -9,18 +9,14 @@
 #include <climits>
 #include <sys/time.h>
 #include <algorithm>
-typedef std::vector<int> i_vector;
-typedef std::vector<i_vector> g_vector;
-typedef std::deque<int> i_deque;
-typedef std::deque<i_deque> g_deque;
 
 
 
 class PmergeMe
 {
     private:
-        i_vector cont_vector;
-        i_deque cont_deque;
+        std::vector<int> cont_vector;
+        std::deque<int> cont_deque;
 
     public :
         PmergeMe();
@@ -32,23 +28,34 @@ class PmergeMe
         void print_container_and_sort(bool display);
         template <typename T ,typename TG> void ford_Johson_algo(TG & group, T& cont);
         std::vector<size_t> get_order_jacobsthal(size_t pend_size);
+        template <typename TG, typename T> size_t binarySearchLimited(const TG& main_chain, const T& target, size_t limit);
 
 };
 
 template <typename T , typename TG>void PmergeMe::running_sorting_algorithm(T& cont, TG & group)
 {
-    for (; T::iterator it = cont.begin(); it != cont.end(); it++)
+    for (typename T::iterator it = cont.begin(); it != cont.end(); it++)
     {
-        T temp.push_back(*it);
+        T temp;
+        temp.push_back(*it);
         group.push_back(temp);
     }
 
     ford_Johson_algo(group, cont);
+
+    cont.clear();
+    for (typename TG::iterator it = group.begin(); it != group.end(); ++it)
+    {
+        for (typename T::iterator elem = it->begin(); elem != it->end(); ++elem)
+        {
+            cont.push_back(*elem);
+        }
+    }
 }
 
 template <typename T ,typename TG> void PmergeMe::ford_Johson_algo(TG &group , T& cont)
 {
-    (void) cont
+    (void) cont;
     size_t size =  group.size();
     if (size <= 1)
         return ;
@@ -68,10 +75,10 @@ template <typename T ,typename TG> void PmergeMe::ford_Johson_algo(TG &group , T
         T b = group[i + 1];
         if (a < b)
         {
-            std::swap(a, b)
+            std::swap(a, b);
         }
         a.insert(a.end(), b.begin(), b.end());
-        ten.push_back(a);
+        temp.push_back(a);
     }
     group = temp;
     ford_Johson_algo(group, cont);
@@ -91,8 +98,51 @@ template <typename T ,typename TG> void PmergeMe::ford_Johson_algo(TG &group , T
     if (!pend_chain.empty())
         main_chain.insert(main_chain.begin(), pend_chain[0]);
     
-    std::vector<int> sequence_order = get_order_jacobsthal(pend.size());
+    std::vector<size_t> sequence_order = get_order_jacobsthal(pend_chain.size());
     // Insertion phase know we have orders so we can insert take elements from pend chain and insert them into main chain
+    for (size_t i = 0 ; i < sequence_order.size(); i++)
+    {
+        size_t idx  = sequence_order[i];
+        if (idx == 0 || idx >= pend_chain.size())
+            continue;
+        
+        size_t main_idx = idx + i + 1;
+        if (main_idx > main_chain.size())
+            main_idx = main_chain.size();
+        
+        size_t insert_pos = binarySearchLimited(main_chain, pend_chain[idx], main_idx);
+        main_chain.insert(main_chain.begin() + insert_pos, pend_chain[idx]);
+    }
+    
+    if (have_straggeler)
+    {
+        size_t insert_pos = binarySearchLimited(main_chain, strageller, main_chain.size());
+        main_chain.insert(main_chain.begin() + insert_pos, strageller);
+    }
+    
+    group = main_chain;
+
+}
+
+template <typename TG, typename T>
+size_t PmergeMe::binarySearchLimited(const TG& main_chain, const T& target, size_t limit)
+{
+    size_t left = 0;
+    size_t right = limit;
+    while (left < right)
+    {
+        size_t mid = left + (right - left) / 2;
+        // Compare using the first element only (the "key")
+        if (main_chain[mid][0] < target[0])
+        {
+            left = mid + 1;
+        }
+        else
+        {
+            right = mid;
+        }
+    }
+    return left;
 }
 
 #endif
