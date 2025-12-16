@@ -68,7 +68,7 @@ private:
         return order;
     }
 
-    size_t binarySearchLimited(const std::vector<std::vector<int>> &chain,
+    size_t binarySearchLimited(const std::vector<std::vector<int> > &chain,
                                const std::vector<int> &value,
                                size_t end)
     {
@@ -92,7 +92,7 @@ private:
         return left;
     }
 
-    void mergeInsertionSortRecursive(std::vector<std::vector<int>> &container)
+    void mergeInsertionSortRecursive(std::vector<std::vector<int> > &container)
     {
         if (container.size() <= 1)
         {
@@ -109,7 +109,7 @@ private:
             has_straggler = true;
         }
 
-        std::vector<std::vector<int>> paired;
+        std::vector<std::vector<int> > paired;
 
         for (size_t i = 0; i + 1 < container.size(); i += 2)
         {
@@ -132,8 +132,8 @@ private:
 
         size_t pair_size = container.front().size() / 2;
 
-        std::vector<std::vector<int>> main_chain;
-        std::vector<std::vector<int>> pend_chain;
+        std::vector<std::vector<int> > main_chain;
+        std::vector<std::vector<int> > pend_chain;
 
         for (size_t i = 0; i < container.size(); i++)
         {
@@ -189,7 +189,7 @@ public:
             return input;
         }
 
-        std::vector<std::vector<int>> container;
+        std::vector<std::vector<int> > container;
         for (std::vector<int>::const_iterator it = input.begin(); it != input.end(); ++it)
         {
             std::vector<int> group;
@@ -200,7 +200,7 @@ public:
         mergeInsertionSortRecursive(container);
 
         std::vector<int> result;
-        for (std::vector<std::vector<int>>::iterator it = container.begin(); it != container.end(); ++it)
+        for (std::vector<std::vector<int> >::iterator it = container.begin(); it != container.end(); ++it)
         {
             result.push_back(it->front());
         }

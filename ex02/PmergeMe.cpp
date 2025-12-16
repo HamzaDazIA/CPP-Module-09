@@ -4,13 +4,13 @@
 PmergeMe::PmergeMe(){}
 PmergeMe& PmergeMe::operator=(const PmergeMe & obj)
 {
-    this->cont_vector = obj.cont_vector;
+
     return (*this);
 }
 
 PmergeMe::PmergeMe(const PmergeMe& obj)
 {
-     this->cont_vector = obj.cont_vector;
+    *this = obj;
 }
 
 PmergeMe::~PmergeMe(){}
@@ -18,5 +18,50 @@ PmergeMe::~PmergeMe(){}
 
 void PmergeMe::parsing_paraneter(std::string str)
 {
+    char *end;
+    long long num = std::strtoll(str.c_str(), &end, 10);
+    if (*end != '\0' || num <= 0 || num > INT_MAX)
+    {
+        throw std::invalid_argument("Invalid input: " + str);
+    }
+    cont_deque.push_back(static_cast<int>(num));
+    cont_vector.push_back(static_cast<int>(num));
+
+}
+
+void PmergeMe::print_container_and_sort(bool display)
+{
+    timeval start, end;
+    std::vector<int>::iterator it = cont_vector.begin();
+    for (; it != cont_vector.end(); it++)
+    {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+    if (display)
+    {
+        gettimeofday(&start, NULL);
+        running_sorting_algorithm(cont_vector);
+        gettimeofday(&end, NULL);
+        time_t seconds = end.tv_sec - start.tv_sec;
+        time_t microseconds = end.tv_usec - start.tv_usec;
+        time_t elapsed = seconds * 1000000 + microseconds;
+        std::cout << "Time to process a range of " << cont_vector.size() << 
+            " elements with std::vector : " << elapsed << " microseconds" << std::endl;
+        
+        gettimeofday(&start, NULL);
+        running_sorting_algorithm(cont_deque);
+        gettimeofday(&end, NULL);
+        seconds = end.tv_sec - start.tv_sec;
+        microseconds = end.tv_usec - start.tv_usec;
+        elapsed = seconds * 1000000 + microseconds;
+        std::cout << "Time to process a range of " << cont_deque.size()
+            << " elements with std::deque : " << elapsed << " microseconds" << std::endl;
+            std::vector<int>::iterator it = cont_vector.begin();
+        for (; it != cont_vector.end(); it++)
+        {
+            std::cout << *it << " ";
+        }
+    }
     
 }
