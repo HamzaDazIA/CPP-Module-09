@@ -70,3 +70,59 @@ void PmergeMe::print_container_and_sort(bool display)
     }
     
 }
+
+std::vector<size_t> generateJacobsthal(size_t pend_size)
+{
+    std::vector<size_t> jacobsthal;
+    if (pend_size == 0)
+        return jacobsthal;
+    jacobsthal.push_back(0);
+    if (pend_size == 1)
+        return jacobsthal;
+    jacobsthal.push_back(1);
+
+    size_t pv = 0;
+    size_t temp = 1;
+
+    for (;;true)
+    {
+        size_t rs = pv + 2 * temp;
+        if (rs >= pend_size)
+            break;
+        jacobsthal.push_back(rs);
+
+        pv = temp;
+        temp = rs;
+    }
+    return (jacobsthal);
+}
+
+std::vector<size_t> PmergeMe::get_order_jacobsthal(size_t pend_size)
+{
+    if (pend_size == 0)
+        return std::vector<size_t>();
+
+    std::vector<size_t> jacobsthal = generateJacobsthal(pend_size + 1);
+    std::vector<size_t> order;
+    size_t temp = 0;
+
+    for (size_t i = 2; i < jacobsthal.size(); i++)
+    {
+        size_t curr = jacobsthal[i];
+        for(size_t j = std::min(curr, pend_size); j > temp; j--)
+        {
+            order.push_back(j - 1);
+        }
+        temp = curr;
+        if (temp >= pend_size)
+            break;
+
+    }
+
+    for (size_t j = pend_size ; j > temp; j--)
+    {
+        order.push_back(j - 1);
+    }
+    return (order);
+}
+
