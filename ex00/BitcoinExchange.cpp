@@ -286,7 +286,8 @@ void BitcoinExchange::read_file_input(std::string file_name)
         std::string value_str = line.substr(line.find_first_of("|") + 1, line.size());
         date = ft_get_line_trim(date);
         value_str = ft_get_line_trim(value_str);
-        check_value_str(value_str);
+        if (check_value_str(value_str) == ERROR)
+            continue;
         time_t time_data = check_date(date);
         if( time_data == ERROR)
         {
@@ -295,13 +296,13 @@ void BitcoinExchange::read_file_input(std::string file_name)
         }
 
         double  value = std::strtod(value_str.c_str(), nullptr);
-        if ( static_cast <long long > (value ) < 0 )
+        if ( value < 0 )
         {
             std::cerr << "Error: not a positive number." << std::endl;
             continue ;
         }
 
-        if (static_cast <long long >(value ) > 1000  )
+        if (value > 1000.0)
         {
             std::cerr << "Error: too large a number." << std::endl;
             continue ;
