@@ -1,24 +1,23 @@
 #include "BitcoinExchange.hpp"
 
-int main(int argc, char **argv)
+
+int main(int ac , char **av)
 {
-    if (argc != 2)
+    if (ac != 2)
     {
-        std::cerr << "Error: could not open file." << std::endl;
+        std::cerr << "Error: you need file .txt ." << std::endl;
         return 1;
     }
 
+    BitcoinExchange btc;
     try
     {
-        BitcoinExchange exchange;
-        exchange.read_stord_cvs();
-        exchange.read_file_input(argv[1]);
+        btc.read_stord_cvs();
     }
-    catch (const std::exception& e)
+    catch(const std::exception& e)
     {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return 1;
+        std::cerr << e.what() << '\n';
     }
-
+    btc.read_file_input(av[1]);
     return 0;
 }

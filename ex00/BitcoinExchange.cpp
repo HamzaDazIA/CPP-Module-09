@@ -3,26 +3,19 @@
 
 
 BitcoinExchange::BitcoinExchange()
-{}
+{
+    
+}
 
 BitcoinExchange::BitcoinExchange(const  BitcoinExchange& obj)
 {
-    *this = obj;
+
 }
-
-
 
 BitcoinExchange & BitcoinExchange::operator=(const BitcoinExchange &obj)
 {
-    if (this != &obj)
-    {
-        this->cont_map = obj.cont_map;
-    }
     return (*this);
 }
-
-BitcoinExchange::~BitcoinExchange()
-{}
 
 void BitcoinExchange::read_stord_cvs(void)
 {
@@ -286,8 +279,7 @@ void BitcoinExchange::read_file_input(std::string file_name)
         std::string value_str = line.substr(line.find_first_of("|") + 1, line.size());
         date = ft_get_line_trim(date);
         value_str = ft_get_line_trim(value_str);
-        if (check_value_str(value_str) == ERROR)
-            continue;
+        check_value_str(value_str);
         time_t time_data = check_date(date);
         if( time_data == ERROR)
         {
@@ -296,13 +288,13 @@ void BitcoinExchange::read_file_input(std::string file_name)
         }
 
         double  value = std::strtod(value_str.c_str(), nullptr);
-        if ( value < 0 )
+        if ( static_cast <long long > (value ) < 0 )
         {
             std::cerr << "Error: not a positive number." << std::endl;
             continue ;
         }
 
-        if (value > 1000.0)
+        if (static_cast <long long >(value ) > INT_MAX )
         {
             std::cerr << "Error: too large a number." << std::endl;
             continue ;

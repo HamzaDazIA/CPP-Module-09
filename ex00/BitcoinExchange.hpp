@@ -7,11 +7,8 @@
 #include <ctime>
 #include <fstream>
 #include <cstring>
-
 #include <string>
 #include <algorithm>
-#include <iomanip>
-
 #define CSV_FILE "data.csv"
 #define CONVER 10
 #define UNCONVER 20
@@ -20,7 +17,6 @@
 #define MIN_YEAR 2009
 #define MIN_MONTH 1
 #define ERROR 404
-
 #define MAX_YEAR 2025 
 #define MAX_MONTH 12
 #define CHECK 20
@@ -33,7 +29,6 @@ class BitcoinExchange
         BitcoinExchange();
         BitcoinExchange(const BitcoinExchange& obj);
         BitcoinExchange & operator=(const BitcoinExchange& obj);
-        ~BitcoinExchange();
         void read_stord_cvs(void);
         void   parsing_date(std::string str);
         void convert_time(int year, int month, int day,  double key_value);

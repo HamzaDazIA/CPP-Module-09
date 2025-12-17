@@ -35,7 +35,7 @@ void RPN::calculate(const std::string &str)
 
         if (!std::isdigit(str[i]) && !std::isspace(str[i]) &&  ((str[i] != '+') && str[i] != '-' && str[i] != '*' && str[i] != '/'))
         {
-            std::cerr << "Error";
+            std::cerr << "Error" << std::endl;
             return ;
         }
         if (str[i] == ' ')
@@ -50,7 +50,7 @@ void RPN::calculate(const std::string &str)
         {
             if(this->cont_stack.size() < 2)
             {
-                std::cerr << "Error";
+                std::cerr << "Error" << std::endl;
                 return;
             }
             else
@@ -74,7 +74,7 @@ void RPN::calculate(const std::string &str)
                 {
                     if (first == 0)
                     {
-                        std::cerr << "Error";
+                        std::cerr << "Error" << std::endl;
                         return ;
                     }
                     rs = second / first;
@@ -89,7 +89,7 @@ void RPN::calculate(const std::string &str)
                 }
                 else 
                 {
-                    std::cerr << "Error";
+                    std::cerr << "Error" << std::endl;
                     return;
                 }
             }
@@ -97,9 +97,9 @@ void RPN::calculate(const std::string &str)
     }
     if (this->cont_stack.size() != 1)
     {
-        std::cerr << "Error";
+        std::cerr << "Error"<< std::endl;
         return ;
     }
-    std::cout << this->cont_stack.top() ;
+    std::cout << this->cont_stack.top() << std::endl;
     return ;
 }
